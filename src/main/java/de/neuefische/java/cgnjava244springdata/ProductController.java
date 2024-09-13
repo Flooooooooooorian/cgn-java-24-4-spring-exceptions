@@ -1,9 +1,11 @@
 package de.neuefische.java.cgnjava244springdata;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/products")
@@ -29,5 +31,11 @@ public class ProductController {
     @GetMapping("{id}")
     public Product getProductById(@PathVariable String id) {
         return productService.getById(id);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNoSuchElementException(NoSuchElementException e) {
+        return e.getMessage();
     }
 }
