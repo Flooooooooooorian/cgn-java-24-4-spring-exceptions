@@ -7,22 +7,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductRepo productRepo;
+    private final ProductService productService;
 
-    public ProductController(ProductRepo productRepo) {
-        this.productRepo = productRepo;
-    }
+//    public ProductController(ProductRepo productRepo) {
+//        this.productRepo = productRepo;
+//    }
 
     @GetMapping
     public List<Product> getAllProducts() {
-        return productRepo.findAll();
+        return productService.findAll();
     }
 
     @PostMapping
     public Product saveProduct(@RequestBody Product productToSave) {
-        return productRepo.save(productToSave);
+        return productService.save(productToSave);
+    }
+
+    @GetMapping("{id}")
+    public Product getProductById(@PathVariable String id) {
+        return productService.getById(id);
     }
 }
